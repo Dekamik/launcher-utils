@@ -16,7 +16,7 @@ namespace create_launcher.Launcher
             lines.AddLine("Exec", data.Exec);
             lines.AddLine("Icon", data.Icon);
             lines.AddLine("Terminal", data.Terminal);
-            lines.AddLine("Type", data.Type);
+            lines.AddLine("Type", LauncherData.Type);
             lines.AddLine("Categories", data.Categories);
             
             File.WriteAllLines(path, lines);

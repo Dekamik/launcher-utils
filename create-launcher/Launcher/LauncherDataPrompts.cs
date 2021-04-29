@@ -21,13 +21,11 @@ namespace create_launcher.Launcher
                     Exec = command,
                     Icon = icon,
                     Terminal = false,
-                    Type = "Application",
                     Categories = new []{"Application"}
                 };
             }
 
             var terminal = Prompt.GetYesNo("Should this run in a terminal?", false);
-            var type = Prompt.GetString("Launcher type:");
             var categories = Prompt.GetString("Launcher categories (comma-separated):")?.Split(",");
             var comment = Prompt.GetString("Launcher description:");
 
@@ -38,7 +36,6 @@ namespace create_launcher.Launcher
                 Exec = command,
                 Icon = icon,
                 Terminal = terminal,
-                Type = type ?? "Application",
                 Categories = categories
             };
         }

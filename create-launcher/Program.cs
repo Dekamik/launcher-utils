@@ -28,10 +28,7 @@ namespace create_launcher
         [Option("-t|--terminal", "Run command in terminal.", CommandOptionType.NoValue)]
         private bool Terminal { get; } = false;
 
-        [Option("--type", Description = "Launcher type.")]
-        private string Type { get; } = "Application";
-
-        [Option("-c|--categories", "Launcher categories.", CommandOptionType.MultipleValue)]
+        [Option("-c|--categories", "Launcher categories. Applicable categories can be found here: https://specifications.freedesktop.org/menu-spec/latest/apa.html", CommandOptionType.MultipleValue)]
         private string[] Categories { get; } = {"Application"};
 
         private void OnExecute()
@@ -55,7 +52,6 @@ namespace create_launcher
                     Exec = LaunchCommand,
                     Icon = ImagePath,
                     Terminal = Terminal,
-                    Type = Type,
                     Categories = Categories
                 };
             }
