@@ -7,9 +7,9 @@ namespace create_launcher.Launcher
     {
         public static LauncherData GetLauncherDataInteractively()
         {
-            var name = NullCheck(Prompt.GetString("Launcher display name"));
-            var command = NullCheck(Prompt.GetString("Command to run with launcher"));
-            var icon = NullCheck(Prompt.GetString("Path to launcher icon"));
+            var name = NullCheck(Prompt.GetString("Launcher display name (required):"));
+            var command = NullCheck(Prompt.GetString("Command to run when clicking the launcher (required):"));
+            var icon = Prompt.GetString("Path to launcher icon:");
             var proceed = Prompt.GetYesNo("Do you want to add advanced options?", false);
 
             if (!proceed)
@@ -27,9 +27,9 @@ namespace create_launcher.Launcher
             }
 
             var terminal = Prompt.GetYesNo("Should this run in a terminal?", false);
-            var type = Prompt.GetString("Launcher type");
-            var categories = Prompt.GetString("Launcher categories (comma-separated)")?.Split(",");
-            var comment = Prompt.GetString("Launcher description");
+            var type = Prompt.GetString("Launcher type:");
+            var categories = Prompt.GetString("Launcher categories (comma-separated):")?.Split(",");
+            var comment = Prompt.GetString("Launcher description:");
 
             return new LauncherData
             {
@@ -38,7 +38,7 @@ namespace create_launcher.Launcher
                 Exec = command,
                 Icon = icon,
                 Terminal = terminal,
-                Type = type,
+                Type = type ?? "Application",
                 Categories = categories
             };
         }

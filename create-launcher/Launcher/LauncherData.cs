@@ -15,7 +15,7 @@ namespace create_launcher.Launcher
 
         public bool Terminal { get; init; }
 
-        public string Type { get; init; }
+        public string Type { get; init; } = "Application";
 
         public string[] Categories { get; init; }
     }
