@@ -1,4 +1,5 @@
-namespace create_launcher
+namespace create_launcher.Launcher
+            
 {
     public class LauncherData
     {

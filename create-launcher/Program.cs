@@ -1,7 +1,10 @@
-﻿using McMaster.Extensions.CommandLineUtils;
+﻿using System;
+using create_launcher.Launcher;
+using McMaster.Extensions.CommandLineUtils;
 
 namespace create_launcher
 {
+    [Command(Name = "create-launcher", Description = "Simple utility for creating launchers for gnome on Ubuntu.")]
     [HelpOption("-h")]
     class Program
     {
@@ -16,8 +19,8 @@ namespace create_launcher
         [Option("-i|--image", Description = "Launcher icon")]
         private string ImagePath { get; }
 
-        [Option("-p|--path", Description = "Path to created launcher. Defaults to /usr/share/application")]
-        private string LauncherPath { get; } = "/usr/share/application";
+        [Option("-p|--path", Description = "Full path to created launcher. Defaults to /usr/share/application/<LauncherName>.desktop")]
+        private string LauncherPath { get; }
         
         [Option("-c|--comment", Description = "Launcher comment")]
         private string Comment { get; }
@@ -33,18 +36,33 @@ namespace create_launcher
 
         private void OnExecute()
         {
-            var data = new LauncherData
-            {
-                Name = LauncherName,
-                Comment = Comment,
-                Exec = LaunchCommand,
-                Icon = ImagePath,
-                Terminal = Terminal,
-                Type = Type,
-                Categories = Categories
-            };
+            var path = LauncherPath ?? $"/usr/share/applications/{LauncherName.ToLower()}.desktop";
+            LauncherData data;
             
-            LauncherWriter.WriteToFile(LauncherPath, data);
+            if (LauncherName == null || LaunchCommand == null)
+            {
+                data = LauncherDataPrompts.GetLauncherDataInteractively();
+                if (data == null)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                data = new LauncherData
+                {
+                    Name = LauncherName,
+                    Comment = Comment,
+                    Exec = LaunchCommand,
+                    Icon = ImagePath,
+                    Terminal = Terminal,
+                    Type = Type,
+                    Categories = Categories
+                };
+            }
+            
+            LauncherWriter.WriteToFile(path, data);
+            Environment.Exit(0);
         }
     }
 }
